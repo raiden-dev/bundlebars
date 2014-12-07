@@ -1,0 +1,23 @@
+{{!
+  Context:
+    partials - List of partials
+      name - Partial name
+      src - Source string
+
+    name - Template name
+    src - Source string
+!}}
+
+var Handlebars = require('handlebars');
+
+{{#each partials}}
+  Handlebars.partials['{{name}}'] = {{{src}}};
+{{/each}}
+
+module.exports = {
+  {{#each partials}}
+    '{{name}}': Handlebars.template({{{src}}}),
+  {{/each}}
+
+  '{{name}}': Handlebars.template({{{src}}})
+};

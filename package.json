@@ -1,0 +1,55 @@
+{
+  "name": "bundlebars",
+  "version": "0.4.0",
+  "description": "Handlebars templates bundler",
+  "license": "MIT",
+  "author": "Andrey Kravstov <raidendev@gmail.com>",
+  "homepage": "https://github.com/wallarm/bundlebars",
+  "keywords": [
+    "handlebars",
+    "bundle",
+    "pack",
+    "amd",
+    "node",
+    "jst",
+    "es6",
+    "module"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:wallarm/bundlebars.git"
+  },
+  "bugs": "https://github.com/wallarm/bundlebars/issues",
+  "bin": {
+    "bb": "bin/bb",
+    "bundlebars": "bin/bundlebars"
+  },
+  "main": "src/Bundlebars",
+  "scripts": {
+    "test": "grunt test",
+    "ci": "grunt ci",
+    "start": "bin/bundlebars"
+  },
+  "dependencies": {
+    "cli-color": "^0.3.2",
+    "es6-promise": "^1.0.0",
+    "handlebars": "^2.0.0",
+    "js-yaml": "^3.2.2",
+    "object-assign": "^1.0.0",
+    "yargs": "^1.3.3"
+  },
+  "peerDependencies": {
+    "grunt": "^0.4.5"
+  },
+  "devDependencies": {
+    "blanket": "^1.1.6",
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-yuidoc": "^0.5.2",
+    "grunt-coveralls": "^1.0.0",
+    "grunt-mocha-test": "^0.12.2",
+    "mocha": "^2.0.1",
+    "mocha-lcov-reporter": "0.0.1",
+    "rimraf": "^2.2.8"
+  }
+}

@@ -1,0 +1,32 @@
+{{!
+  Context:
+    partials - List of partials
+      name - Partial name
+      src - Source string
+
+    name - Template name
+    src - Source string
+!}}
+
+define([
+  'handlebars'
+
+  {{#each partials}}
+    , '{{name}}'
+  {{/each}}
+
+], function (
+  Handlebars
+
+  {{#each partials}}
+    , {{var name}}
+  {{/each}}
+) {
+
+  {{#each partials}}
+    Handlebars.partials['{{name}}'] = {{var name}};
+  {{/each}}
+
+  return Handlebars.template({{{src}}});
+
+});

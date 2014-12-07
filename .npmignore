@@ -1,0 +1,8 @@
+coverage/
+doc/
+.npmignore
+.gitignore
+.travis.yml
+.jshintrc
+*.sublime-workspace
+*.sublime-project

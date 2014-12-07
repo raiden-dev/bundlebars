@@ -1,0 +1,19 @@
+{{!
+  Context:
+    partials - List of partials
+      name - Partial name
+      src - Source string
+
+    name - Template name
+    src - Source string
+!}}
+
+(function () {
+
+  {{#each partials}}
+    {{>amd}}
+  {{/each}}
+
+  {{>amd}}
+
+}());

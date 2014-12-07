@@ -1,0 +1,19 @@
+{{!
+  Context:
+    partials - List of partials
+      name - Partial name
+      src - Source string
+
+    name - Template name
+    src - Source string
+!}}
+
+import * as Handlebars from 'handlebars';
+
+{{#each partials}}
+  import {{var name}} from '{{name}}';
+
+  Handlebars.partials['{{name}}'] = {{var name}};
+{{/each}}
+
+export default Handlebars.template({{{src}}});

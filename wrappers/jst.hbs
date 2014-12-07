@@ -1,0 +1,19 @@
+{{!
+  Context:
+    partials - List of partials
+      name - Partial name
+      src - Source string
+
+    name - Template name
+    src - Source string
+!}}
+
+window.JST = window.JST || {};
+
+{{#each partials}}
+  JST['{{name}}'] = Handlebars.template({{{src}}});
+
+  Handlebars.partials['{{name}}'] = JST['{{name}}'];
+{{/each}}
+
+JST['{{name}}'] = Handlebars.template({{{src}}});
