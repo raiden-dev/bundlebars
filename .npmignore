@@ -1,5 +1,9 @@
+graphics/
+tests/
 coverage/
 doc/
+blanket.js
+Gruntfile.js
 .npmignore
 .gitignore
 .travis.yml
