@@ -97,23 +97,47 @@ if (typeof Object.assign !== 'function') {
     resolveTemplate: function (state) {
       state = state || {};
 
-      if (!state.templateFilename) {
+      if (typeof state.template === 'string' && !state.templateFilename) {
         state.templateFilename = state.template || '';
 
         state.templateName = path.basename(state.templateFilename)
           .replace(path.extname(state.templateFilename), '');
       }
+      else if (typeof state.template === 'object' && !state.templateStream) {
+        state.templateStream = state.template;
+        state.templateName = '';
+      }
 
       return new Promise(function (resolve, reject) {
-        fs.readFile(state.templateFilename, 'utf8', function (err, data) {
-          if (err) {
-            reject(err);
-            return;
-          }
+        var data = '';
 
-          state.template = data;
-          resolve(state);
-        });
+        if (state.templateStream) {
+          state.templateStream.setEncoding('utf8');
+
+          state.templateStream.on('data', function (chunk) {
+            data += chunk;
+          });
+
+          state.templateStream.on('end', function () {
+            state.template = data;
+            resolve(state);
+          });
+
+          state.templateStream.on('error', function (err) {
+            reject(err);
+          });
+        }
+        else {
+          fs.readFile(state.templateFilename, 'utf8', function (err, data) {
+            if (err) {
+              reject(err);
+              return;
+            }
+
+            state.template = data;
+            resolve(state);
+          });
+        }
       });
     },
 
@@ -179,7 +203,9 @@ if (typeof Object.assign !== 'function') {
     registerPartials: function (state) {
       state = state || {};
 
-      if (this.noPartials) {
+      if (this.noPartials ||
+        (state.templateStream && (!this.partialsDir || !this.partialsExt))) {
+
         return new Promise(function (resolve) {
           resolve(state);
         });
@@ -381,7 +407,7 @@ if (typeof Object.assign !== 'function') {
    * Compiles template with data.
    *
    * @method compile
-   * @param {String} template          Template's filename.
+   * @param {String|Stream} template   Template's filename or stream.
    * @param {String|Object} [context]  Template's context filename
    *                                   or data object.
    * @returns {Promise}                Fulfilled with {String} result.
@@ -410,9 +436,9 @@ if (typeof Object.assign !== 'function') {
    * Precompiles template and applies wrapper.
    *
    * @method precompile
-   * @param {String} template    Template's filename.
-   * @params {String} [wrapper]  Wrapper's filename.
-   * @returns {Promise}          Fulfilled with {String} result.
+   * @param {String|Stream} template  Template's filename.
+   * @params {String} [wrapper]       Wrapper's filename.
+   * @returns {Promise}               Fulfilled with {String} result.
    */
     precompile: function (template, wrapper) {
       return new Promise(function (resolve, reject) {

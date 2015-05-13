@@ -4,10 +4,10 @@ var path = require('path'),
     Bundlebars = require('../src/Bundlebars');
 
 module.exports = function (grunt) {
-  grunt.registerMultiTask('bundlebars', 'Bundle Handlebars templates.', task);
+  grunt.registerMultiTask('bundlebars', 'Compile Handlebars templates.', task);
 
-  function task(env) {
-    env = env || Bundlebars;
+  function task(Env) {
+    Env = Env || Bundlebars;
 
     var done = this.async(),
         queue = [];
@@ -23,7 +23,7 @@ module.exports = function (grunt) {
     }
 
     /*jshint newcap:false*/
-    var bundlebars = new env({
+    var bundlebars = new Env({
       partialsDir: partialsDir,
       partialsExt: partialsExt,
       helpersDir: options.helpers,
@@ -75,7 +75,9 @@ module.exports = function (grunt) {
         var name = path.basename(src).replace(path.extname(src), ''),
             data = '';
 
-        if (typeof options.data === 'boolean') {
+        if (options.data === true ||
+          (typeof options.data === 'undefined' && options.compile)) {
+
           if (path.extname(src)) {
             data = src.replace(path.extname(src), '.json');
           }

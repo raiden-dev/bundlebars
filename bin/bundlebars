@@ -1,151 +1,65 @@
 #!/usr/bin/env node
 
-var fs = require('fs'),
-    path = require('path'),
-    util = require('util'),
-    yargs = require('yargs'),
-    clc = require('cli-color'),
-    Bundlebars = require('../src/Bundlebars'),
-    pkg = require('../package.json');
+var yargs = require('yargs'),
+    pkg = require('../package.json'),
+    cli = require('../src/bundlebars-cli');
 
-(function () {
+var argv = yargs
+  .usage('Usage: $0 [options] templates/*.hbs')
+  .options({
+    o: {
+      alias: 'out',
+      describe: 'Output directory'
+    },
 
-  var argv = yargs
-    .usage('Usage: $0 [options] template > out.js')
-    .options({
-      o: {
-        alias: 'out',
-        describe: 'Output to file'
-      },
+    c: {
+      alias: 'compile',
+      describe: 'Compile template'
+    },
 
-      c: {
-        alias: 'compile',
-        describe: 'Compile template'
-      },
+    p: {
+      alias: 'precompile',
+      describe: 'Precompile template'
+    },
 
-      p: {
-        alias: 'precompile',
-        describe: 'Precompile template'
-      },
+    w: {
+      alias: 'wrapper',
+      describe: 'Wrapper template'
+    },
 
-      w: {
-        alias: 'wrapper',
-        describe: 'Wrapper template'
-      },
+    d: {
+      alias: 'data',
+      describe: 'Data file'
+    },
 
-      d: {
-        alias: 'data',
-        describe: 'Data file'
-      },
+    a: {
+      alias: 'partials',
+      describe: 'Partials path'
+    },
 
-      a: {
-        alias: 'partials',
-        describe: 'Partials path'
-      },
+    e: {
+      alias: 'helpers',
+      describe: 'Helpers path'
+    },
 
-      e: {
-        alias: 'helpers',
-        describe: 'Helpers path'
-      },
-
-      O: {
-        alias: 'options',
-        describe: 'Compiler options module'
-      }
-    })
-    .version(pkg.version, 'v').alias('v', 'version')
-    .help('h').alias('h', 'help')
-    .boolean(['c', 'p'])
-    .string(['o', 'w', 'd', 'e', 'O'])
-    .requiresArg(['o', 'w', 'd', 'e', 'O'])
-    .demand(1)
-    .check(function (argv) {
-      if (argv.partials === true) {
-        return 'Missing argument value: a';
-      }
-    })
-    .argv;
-
-  var params = {
-    partialsDir: argv.partials,
-    helpersDir: argv.helpers,
-    noPartials: argv.partials === false
-  };
-
-  if (argv.options) {
-    params.compilerOptions = require(argv.options);
-  }
-
-  /* Built-in wrappers */
-  var wrappersPath = path.join(__dirname, '..', 'wrappers');
-
-  switch (argv.wrapper) {
-    case 'amd':
-      argv.wrapper = path.join(wrappersPath, 'amd.hbs');
-      break;
-
-    case 'amd-bundle':
-      argv.wrapper = path.join(wrappersPath, 'amd-bundle.hbs');
-      break;
-
-    case 'node':
-      argv.wrapper = path.join(wrappersPath, 'node.hbs');
-      break;
-
-    case 'node-bundle':
-      argv.wrapper = path.join(wrappersPath, 'node-bundle.hbs');
-      break;
-
-    case 'es6':
-      argv.wrapper = path.join(wrappersPath, 'es6-bundle.hbs');
-      break;
-
-    case 'es6-bundle':
-      argv.wrapper = path.join(wrappersPath, 'es6-bundle.hbs');
-      break;
-
-    case 'jst':
-      argv.wrapper = path.join(wrappersPath, 'jst.hbs');
-      break;
-
-    default:
-      if (typeof argv.wrapper === 'string') {
-        argv.wrapper = path.resolve(process.cwd(), argv.wrapper);
-      }
+    O: {
+      alias: 'options',
+      describe: 'Compiler options module'
+    }
+  })
+  .version(pkg.version, 'v').alias('v', 'version')
+  .help('h').alias('h', 'help')
+  .boolean(['c', 'p'])
+  .string(['o', 'w', 'd', 'e', 'O'])
+  .requiresArg(['o', 'w', 'd', 'e', 'O'])
+  .demand(1)
+  .check(function (argv) {
+    if (argv.partials === true) {
+      throw 'Missing argument value: a';
     }
 
-  var bundlebars = new Bundlebars(params),
-      template = argv._[0];
+    return true;
+  })
+  .argv;
 
-  if (argv.precompile) {
-    bundlebars.precompile(template, argv.wrapper)
-      .then(writeResult)
-      .catch(util.error);
-  }
-  else {
-    bundlebars.compile(template, argv.data)
-      .then(writeResult)
-      .catch(util.error);
-  }
-
-  function writeResult(result) {
-    if (argv.out) {
-      fs.writeFile(argv.out, result, function (err) {
-        if (err) {
-          throw err;
-        }
-
-        console.log([
-          'Writing result to ',
-          clc.cyan(argv.out),
-          '...',
-          clc.green('OK')
-        ].join(''));
-      });
-    }
-    else {
-      process.stdout.write(result);
-    }
-  }
-
-}());
+cli(argv);
