@@ -1,6 +1,8 @@
-# <img src="https://wallarm.com/bundlebars.svg" alt="" width="60" height="52" valign="middle"> Bundlebars v0.4.0 [![Build Status](https://travis-ci.org/wallarm/bundlebars.svg?branch=master)](https://travis-ci.org/wallarm/bundlebars) [![Coverage Status](https://coveralls.io/repos/wallarm/bundlebars/badge.png?branch=master)](https://coveralls.io/r/wallarm/bundlebars?branch=master)
+# <img src="https://wallarm.com/bundlebars.svg" alt="" width="60" height="52" valign="middle"> Bundlebars v1.0.0
 
-> Handlebars templates bundler
+[![Build Status](https://travis-ci.org/wallarm/bundlebars.svg?branch=master)](https://travis-ci.org/wallarm/bundlebars) [![Coverage Status](https://coveralls.io/repos/wallarm/bundlebars/badge.svg?branch=master)](https://coveralls.io/r/wallarm/bundlebars?branch=master) [![Dependencies](https://david-dm.org/wallarm/bundlebars.svg)](https://david-dm.org/wallarm/bundlebars)
+
+> Handlebars templates compiler & bundler
 
 Bundlebars is a helper tool for Handlebars templates engine to compile static templates with JSON or YAML data and precompile templates using wrappers (which is actually Handlebars templates too).
 
@@ -12,7 +14,8 @@ Bundlebars provides you with easy way to build static sites from bunch of templa
   - Compile Handlebars templates to HTML/Markdown/_anystring_ with JSON or YAML data
   - Precompile Handlebars templates and wrap them to AMD/Node/ES6/JST/_your-wrapper_ bundles
   - Easily extensible; Simple Promise-based API; Tested; Covered
-  - CLI and Grunt task already included, more coming
+  - CLI interface supporting unix pipes
+  - Grunt task already included
 
 
 ## Getting Started
@@ -34,24 +37,24 @@ So see the usage help:
 ```
 $ bb --help
 
-Usage: node ./bin/bb [options] template > out.js
+Usage: bin/bb [options] templates/*.hbs
 
 Options:
-  -o, --out         Output to file
-  -c, --compile     Compile template
-  -p, --precompile  Precompile template
-  -w, --wrapper     Wrapper template
-  -d, --data        Data file
+  -o, --out         Output directory                                    [string]
+  -c, --compile     Compile template                                   [boolean]
+  -p, --precompile  Precompile template                                [boolean]
+  -w, --wrapper     Wrapper template                                    [string]
+  -d, --data        Data file                                           [string]
   -a, --partials    Partials path
-  -e, --helpers     Helpers path
-  -O, --options     Compiler options module
+  -e, --helpers     Helpers path                                        [string]
+  -O, --options     Compiler options module                             [string]
   -v, --version     Show version number
   -h, --help        Show help
 ```
 
 Bundlebars CLI is useful in non-JS build environments such as **Make** or **Ant**. And it supports standard unix pipes as well.
 
-By default, `bb` reads template from file and writes resulting string to STDOUT. Specify `--out` option to save output to file.
+By default, `bb` reads template from file or STDIN and writes resulting string to STDOUT. Specify `--out` option to save output to directory.
 
 Take a note about `--options` flag. You could specify path to node module here exporting object that could be passed directly to **Handlebars#compile** or **Handlebars#precompile** methods. For instance:
 
