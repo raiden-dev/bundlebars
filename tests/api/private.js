@@ -1,6 +1,7 @@
 /*jshint maxlen:false*/
 var fs = require('fs'),
     path = require('path'),
+    stream = require('stream'),
     Promise = require('es6-promise').Promise,
     yaml = require('js-yaml'),
     Bundlebars = require('../../src/Bundlebars');
@@ -62,8 +63,10 @@ describe('Bundlebars private API', function () {
       }
     });
 
-    it('should reject Promise with error object when resolve failed', function (done) {
-      bundlebars.resolveTemplate()
+    it('should reject Promise with error object when failed to read template file', function (done) {
+      bundlebars.resolveTemplate({
+        template: ''
+      })
         .then(function () {
           done(new Error('Bundlebars#resolveTemplate resolved instead of rejecting'));
         },
@@ -78,7 +81,32 @@ describe('Bundlebars private API', function () {
         });
     });
 
-    it('should resolve promise with updated state', function (done) {
+    it('should reject Promise with error object when template stream is broken', function (done) {
+      var templateStream = new stream.Readable();
+      templateStream._read = function () {};
+
+      setTimeout(function () {
+        templateStream.emit('error', new Error());
+      }, 0);
+
+      bundlebars.resolveTemplate({
+        template: templateStream
+      })
+        .then(function () {
+          done(new Error('Bundlebars#resolveTemplate resolved instead of rejecting'));
+        },
+
+        function (err) {
+          if (!(err instanceof Error)) {
+            done(new Error('Bundlebars#resolveTemplate rejected with not an Error object'));
+          }
+          else {
+            done();
+          }
+        });
+    });
+
+    it('should resolve promise with updated state for string template', function (done) {
       var dirname = 'test.tmp',
           filename = 'foo',
           filedata = 'test test',
@@ -120,6 +148,33 @@ describe('Bundlebars private API', function () {
           }
         }, done)
         .then(afterOne, afterOne);
+    });
+
+    it('should resolve promise with updated state for stream template', function (done) {
+      var templateStream = new stream.Readable();
+      templateStream._read = function () {};
+
+      templateStream.push('test test');
+      templateStream.push(null);
+
+      bundlebars.resolveTemplate({
+        template: templateStream,
+        unrelated: 'foo bar'
+      })
+        .then(function (state) {
+          if (state.templateStream !== templateStream) {
+            done(new Error('state.templateStream was updated with incorrect value'));
+          }
+          else if (state.template !== 'test test') {
+            done(new Error('state.template was updated with incorrect value'));
+          }
+          else if (state.unrelated !== 'foo bar') {
+            done(new Error('state.unrelated was unexpectedly changed'));
+          }
+          else {
+            done();
+          }
+        }, done);
     });
 
   });
