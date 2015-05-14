@@ -76,7 +76,7 @@ module.exports = function (grunt) {
             data = '';
 
         if (options.data === true ||
-          (typeof options.data === 'undefined' && options.compile)) {
+          (typeof options.data === 'undefined' && !options.precompile)) {
 
           if (path.extname(src)) {
             data = src.replace(path.extname(src), '.json');
