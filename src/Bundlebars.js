@@ -232,7 +232,8 @@ if (typeof Object.assign !== 'function') {
       }.bind(this);
 
       return new Promise(function (resolve, reject) {
-        var queue = [];
+        var queue = [],
+            done = [];
 
         (function lookup(data) {
           data = ' ' + data.replace(/\\/gm, '\\\\');
@@ -246,8 +247,9 @@ if (typeof Object.assign !== 'function') {
             names.push(match[1]);
           }
 
+          // Unique and not resolved yet
           names = names.filter(function (value, index, arr) {
-            return arr.indexOf(value) === index;
+            return arr.indexOf(value) === index && done.indexOf(value) === -1;
           });
 
           queue = queue.concat(names);
@@ -272,7 +274,9 @@ if (typeof Object.assign !== 'function') {
                 src: data
               });
 
+              done.push(name);
               queue.splice(queue.indexOf(name), 1);
+
               lookup(data);
             });
           });
