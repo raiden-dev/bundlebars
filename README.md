@@ -1,4 +1,4 @@
-# <img src="https://wallarm.com/bundlebars.svg" alt="" width="60" height="52" valign="middle"> Bundlebars v1.0.0
+# <img src="https://wallarm.com/bundlebars.svg" alt="" width="60" height="52" valign="middle"> Bundlebars
 
 [![Build Status](https://travis-ci.org/wallarm/bundlebars.svg?branch=master)](https://travis-ci.org/wallarm/bundlebars) [![Coverage Status](https://coveralls.io/repos/wallarm/bundlebars/badge.svg?branch=master)](https://coveralls.io/r/wallarm/bundlebars?branch=master) [![Dependencies](https://david-dm.org/wallarm/bundlebars.svg)](https://david-dm.org/wallarm/bundlebars)
 
