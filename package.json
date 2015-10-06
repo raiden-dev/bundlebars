@@ -1,6 +1,6 @@
 {
   "name": "bundlebars",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Handlebars templates compiler & bundler",
   "license": "MIT",
   "author": "Andrey Kravstov <raidendev@gmail.com>",
