@@ -199,9 +199,7 @@ var fs = require('fs'),
       if (this.noPartials ||
         (state.templateStream && (!this.partialsDir || !this.partialsExt))) {
 
-        return new Promise(function (resolve) {
-          resolve(state);
-        });
+        return Promise.resolve(state);
       }
 
       var partials = [];
@@ -328,9 +326,7 @@ var fs = require('fs'),
 
       state.result = template(state.context);
 
-      return new Promise(function (resolve) {
-        resolve(state);
-      });
+      return Promise.resolve(state);
     },
 
   /**
@@ -361,9 +357,7 @@ var fs = require('fs'),
       state.result = this.handlebars.precompile(state.template,
         this.compilerOptions);
 
-      return new Promise(function (resolve) {
-        resolve(state);
-      });
+      return Promise.resolve(state);
     },
 
   /**
@@ -420,9 +414,7 @@ var fs = require('fs'),
           .then(this.registerPartials.bind(this))
           .then(this.compileTemplate.bind(this))
           .then(function (state) {
-            return new Promise(function (resolve) {
-              resolve(state.result);
-            });
+            return Promise.resolve(state.result);
           })
           .then(resolve, reject);
 
@@ -451,9 +443,7 @@ var fs = require('fs'),
           .then(this.precompileTemplate.bind(this))
           .then(this.wrapTemplate.bind(this))
           .then(function (state) {
-            return new Promise(function (resolve) {
-              resolve(state.result);
-            });
+            return Promise.resolve(state.result);
           })
           .then(resolve, reject);
 
@@ -478,9 +468,7 @@ var fs = require('fs'),
         value = Object.assign(value, item);
       });
 
-      return new Promise(function (resolve) {
-        resolve(value);
-      });
+      return Promise.resolve(value);
     }
 
   /**
