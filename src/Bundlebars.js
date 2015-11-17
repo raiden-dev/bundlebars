@@ -12,11 +12,6 @@ var fs = require('fs'),
     Handlebars = require('handlebars'),
     yaml = require('js-yaml');
 
-// Object.assign polyfill
-if (typeof Object.assign !== 'function') {
-  Object.assign = require('object-assign');
-}
-
 /**
  * Bundlebars constructor.
  *
