@@ -2,7 +2,6 @@
 var fs = require('fs'),
     path = require('path'),
     stream = require('stream'),
-    Promise = require('es6-promise').Promise,
     yaml = require('js-yaml'),
     Bundlebars = require('../../src/Bundlebars');
 

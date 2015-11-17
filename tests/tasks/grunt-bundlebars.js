@@ -4,7 +4,6 @@ var fs = require('fs'),
     rimraf = require('rimraf'),
     grunt = require('grunt'),
     hooker = grunt.util.hooker,
-    Promise = require('es6-promise').Promise,
     Bundlebars = require('../../src/Bundlebars'),
     bundlebarsTask = require('../../tasks/grunt-bundlebars');
 

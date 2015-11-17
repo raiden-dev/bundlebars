@@ -1,6 +1,5 @@
 /*jshint maxlen:false*/
 var fs = require('fs'),
-    Promise = require('es6-promise').Promise,
     Bundlebars = require('../../src/Bundlebars');
 
 describe('Bundlebars public API', function () {
