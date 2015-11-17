@@ -1,8 +1,7 @@
 language: node_js
 node_js:
-  - "0.12"
+  - "4.2.2"
 before_install:
-  - "npm update npm -g"
   - "npm install -g grunt-cli"
 install: "npm install"
 script: "npm run-script ci"
