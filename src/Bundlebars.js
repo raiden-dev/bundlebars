@@ -4,13 +4,11 @@
  * @module Bundlebars
  * @requires fs
  * @requires path
- * @requires es6-promise
  * @requires handlebars
  * @requires js-yaml
  */
 var fs = require('fs'),
     path = require('path'),
-    Promise = require('es6-promise').Promise,
     Handlebars = require('handlebars'),
     yaml = require('js-yaml');
 

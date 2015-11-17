@@ -1,6 +1,5 @@
 var path = require('path'),
     clc = require('cli-color'),
-    Promise = require('es6-promise').Promise,
     Bundlebars = require('../src/Bundlebars');
 
 module.exports = function (grunt) {
