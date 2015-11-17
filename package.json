@@ -26,6 +26,9 @@
     "ci": "grunt ci",
     "start": "bin/bundlebars"
   },
+  "engines": {
+    "node": "^4.2.2"
+  },
   "dependencies": {
     "cli-color": "^1.0.0",
     "es6-promise": "^3.0.2",
