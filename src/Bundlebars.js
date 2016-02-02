@@ -301,8 +301,21 @@ var fs = require('fs'),
 
           files.forEach(function (name) {
             var filepath = path.join(helpersDir, name);
+            var register = require(filepath);
 
-            require(filepath)(handlebars);
+            if (register.__esModule) {
+              for (var p in register) {
+                if (
+                  register.hasOwnProperty(p) &&
+                  typeof register[p] === 'function'
+                ) {
+                  register[p](handlebars);
+                }
+              }
+            }
+            else if (typeof register === 'function') {
+              register(handlebars);
+            }
           });
 
           resolve(state);
