@@ -4,7 +4,7 @@
 
 > Handlebars templates compiler & bundler
 
-Bundlebars is a helper tool for Handlebars templates engine to compile static templates with JSON or YAML data and precompile templates using wrappers (which is actually Handlebars templates too).
+Bundlebars is a tool for Handlebars templates engine to compile static templates with JSON or YAML data and precompile templates using wrappers (which is actually Handlebars templates too).
 
 Bundlebars provides you with easy way to build static sites from bunch of templates and effectively deliver precompiled templates to your single page applications, exactly in the way you want it to be.
 
@@ -15,14 +15,14 @@ Bundlebars provides you with easy way to build static sites from bunch of templa
   - Precompile Handlebars templates and wrap them to AMD/Node/ES6/JST/_your-wrapper_ bundles
   - Easily extensible; Simple Promise-based API; Tested; Covered
   - CLI interface supporting unix pipes
-  - Grunt task already included
+  - Grunt task included
 
 
 ## Getting Started
 
 Bundlebars itself is a node module. So you certainly need [node.js](http://nodejs.org/) to use it. If you haven't got it yet just choose the best method to install in the [official documentation](https://github.com/joyent/node/wiki/installation) and do it, cause node is awesome!
 
-If you wish to use Bundlebars only with the [Grunt](http://gruntjs.com/) build system, install it through npm locally for project:
+If you wish to use Bundlebars only with the [Grunt](http://gruntjs.com/) task runner, install it through npm locally for project:
 `npm install bundlebars --save-dev`
 
 For console fans Bundlebars would make more sense if installed globally. Use npm with __-g__ flag (may require superuser privileges): `npm install -g bundlebars`. Afterwards use `bb` command anywhere to call for Bundlebars executable.
@@ -32,7 +32,7 @@ For console fans Bundlebars would make more sense if installed globally. Use npm
 
 The shorthand to Bundlebars executable is `bb`. But `bundlebars` command will also work. Who knows if you like to have original [bb](http://youtu.be/9ukhOAUseKY) in your system for some reason :)
 
-So see the usage help:
+Usage help:
 
 ```
 $ bb --help
@@ -104,7 +104,7 @@ bundlebars: {
 }
 ```
 
-It's very handy to use dynamic files object notation with Bundlebars, [read more](http://gruntjs.com/configuring-tasks#building-the-files-object-dynamically) about this.
+It's very handy to use dynamic files object notation with Bundlebars, [read more](http://gruntjs.com/configuring-tasks#building-the-files-object-dynamically) about it.
 
 Available task options:
 
